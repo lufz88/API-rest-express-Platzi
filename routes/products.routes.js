@@ -5,9 +5,13 @@ const service = new ProductsService();
 
 const routerProducts = express.Router();
 
-routerProducts.get('/', async (req, res) => {
-  const products = await service.find();
-  res.status(200).json(products);
+routerProducts.get('/', async (req, res, next) => {
+  try {
+    const products = await service.find();
+    res.status(200).json(products);
+  } catch (err) {
+    next(err);
+  }
 });
 
 routerProducts.get('/filter', (req, res) => {
@@ -16,15 +20,13 @@ routerProducts.get('/filter', (req, res) => {
 
 // Los endpoints específicos tienen que ir antes de los endpoints dinámicos
 
-routerProducts.get('/:pid', async (req, res) => {
-  const { pid } = req.params;
-  const product = await service.findOne(pid);
-  if (product) {
+routerProducts.get('/:pid', async (req, res, next) => {
+  try {
+    const { pid } = req.params;
+    const product = await service.findOne(pid);
     res.status(200).json(product);
-  } else {
-    res.status(404).json({
-      message: 'not found',
-    });
+  } catch (err) {
+    next(err);
   }
 });
 
@@ -34,24 +36,36 @@ routerProducts.post('/', async (req, res) => {
   res.status(201).json(newProduct);
 });
 
-routerProducts.put('/:pid', async (req, res) => {
-  const { pid } = req.params;
-  const body = req.body;
-  const product = await service.update(pid, body);
-  res.status(200).json(product);
+routerProducts.put('/:pid', async (req, res, next) => {
+  try {
+    const { pid } = req.params;
+    const body = req.body;
+    const product = await service.update(pid, body);
+    res.status(200).json(product);
+  } catch (err) {
+    next(err);
+  }
 });
 
-routerProducts.patch('/:pid', async (req, res) => {
-  const { pid } = req.params;
-  const body = req.body;
-  const product = await service.update(pid, body);
-  res.status(200).json(product);
+routerProducts.patch('/:pid', async (req, res, next) => {
+  try {
+    const { pid } = req.params;
+    const body = req.body;
+    const product = await service.update(pid, body);
+    res.status(200).json(product);
+  } catch (err) {
+    next(err);
+  }
 });
 
-routerProducts.delete('/:pid', async (req, res) => {
-  const { pid } = req.params;
-  const rta = await service.delete(pid);
-  res.status(200).json(rta);
+routerProducts.delete('/:pid', async (req, res, next) => {
+  try {
+    const { pid } = req.params;
+    const rta = await service.delete(pid);
+    res.status(200).json(rta);
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = routerProducts;

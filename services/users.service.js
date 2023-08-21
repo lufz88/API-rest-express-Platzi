@@ -16,16 +16,16 @@ class UsersService {
     }
   }
 
-  find() {
+  async find() {
     return this.users;
   }
 
-  findOne(pid) {
+  async findOne(pid) {
     const user = this.users.find((user) => user.id == pid);
     return user;
   }
 
-  update(uid, changes) {
+  async update(uid, changes) {
     const index = this.users.findIndex((user) => user.id === uid);
     if (index === -1) {
       throw new Error('product not found');
@@ -36,7 +36,7 @@ class UsersService {
     }
   }
 
-  delete(uid) {
+  async delete(uid) {
     const index = this.users.findIndex((user) => user.id === uid);
     if (index === -1) {
       throw new Error('product not found');

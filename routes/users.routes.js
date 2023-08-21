@@ -5,15 +5,15 @@ const service = new UsersService();
 
 const routerUsers = express.Router();
 
-routerUsers.get('/', (req, res) => {
-  const users = service.find();
+routerUsers.get('/', async (req, res) => {
+  const users = await service.find();
 
   res.status(200).json(users);
 });
 
-routerUsers.get('/:uid', (req, res) => {
+routerUsers.get('/:uid', async (req, res) => {
   const { uid } = req.params;
-  const user = service.findOne(uid);
+  const user = await service.findOne(uid);
   if (user) {
     res.status(200).json(user);
   } else {
@@ -23,23 +23,23 @@ routerUsers.get('/:uid', (req, res) => {
   }
 });
 
-routerUsers.put('/:uid', (req, res) => {
+routerUsers.put('/:uid', async (req, res) => {
   const { uid } = req.params;
   const body = req.body;
-  const user = service.update(uid, body);
+  const user = await service.update(uid, body);
   res.status(200).json(user);
 });
 
-routerUsers.patch('/:uid', (req, res) => {
+routerUsers.patch('/:uid', async (req, res) => {
   const { uid } = req.params;
   const body = req.body;
-  const user = service.update(uid, body);
+  const user = await service.update(uid, body);
   res.status(200).json(user);
 });
 
-routerUsers.delete('/:uid', (req, res) => {
+routerUsers.delete('/:uid', async (req, res) => {
   const { uid } = req.params;
-  const rta = service.delete(uid);
+  const rta = await service.delete(uid);
   res.status(200).json(rta);
 });
 

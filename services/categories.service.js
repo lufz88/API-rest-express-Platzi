@@ -16,16 +16,16 @@ class CategoriesService {
     }
   }
 
-  find() {
+  async find() {
     return this.categories;
   }
 
-  findOne(cid) {
+  async findOne(cid) {
     const category = this.categories.find((cat) => cat.id == cid);
     return category;
   }
 
-  update(cid, changes) {
+  async update(cid, changes) {
     const index = this.categories.findIndex((cat) => cat.id === cid);
     if (index === -1) {
       throw new Error('product not found');
@@ -35,8 +35,7 @@ class CategoriesService {
       return this.categories[index];
     }
   }
-
-  delete(cid) {
+  async delete(cid) {
     const index = this.categories.findIndex((cat) => cat.id === cid);
     if (index === -1) {
       throw new Error('product not found');
