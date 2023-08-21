@@ -8,7 +8,7 @@ const {
 } = require('./middlewares/error.handler');
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 
@@ -32,11 +32,11 @@ app.use(cors(options));
 
 // app.use(cors()); // así se habilita que cualquier origen pueda conectarse
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('Hola, mi server en express');
 });
 
-app.get('/nueva-ruta', (req, res) => {
+app.get('/api/nueva-ruta', (req, res) => {
   res.send('Hola, soy otra ruta');
 });
 
